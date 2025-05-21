@@ -24,6 +24,7 @@ class CustomUser(AbstractUser):
     father_telegram_id = models.CharField(max_length=100, blank=True, null=True)
     mother_telegram_id = models.CharField(max_length=100, blank=True, null=True)
     
+    is_archived = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
 

@@ -68,7 +68,7 @@ class CustomUser(AbstractUser):
     photo = models.ImageField(upload_to="account/profile_pics/", blank=True, null=True)
     birthday = models.DateField(null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
-    role = models.ManyToManyField(Role, blank=True) # worker
+    role = models.ForeignKey(Role, blank=True, null=True, on_delete=models.SET_NULL) # worker
     custom_uuid = models.UUIDField(unique=True, editable=False, null=True)
     father_phone = models.CharField(max_length=15, blank=True, null=True)
     mother_phone = models.CharField(max_length=15, blank=True, null=True)

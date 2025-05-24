@@ -115,6 +115,27 @@
           </li>
 
           <li class="sidebar-menu-group-title">Application</li>
+          <li class="dropdown">
+            <a href="javascript:void(0)">
+              <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
+              <span>Users</span>
+            </a>
+            <ul class="sidebar-submenu">
+              <li>
+                <a href="{% url 'account:users_list'%}"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Users List</a>
+              </li>
+              <li>
+                <a href="users-grid.html"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Users Grid</a>
+              </li>
+              <li>
+                <a href="add-user.html"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add User</a>
+              </li>
+              <li>
+                <a href="view-profile.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> View Profile</a>
+              </li>
+            </ul>
+          </li>
+
 
           <li class="dropdown">
             <a href="javascript:void(0)">
@@ -650,7 +671,7 @@
                 <!-- Notification dropdown end -->
 
                 <div class="dropdown">
-                  <button class="d-flex justify-content-center align-items-center rounded-circle" type="button" data-bs-toggle="dropdown"><img src="assets/images/user.png" alt="image" class="w-40-px h-40-px object-fit-cover rounded-circle" /></button>
+                  <button class="d-flex justify-content-center align-items-center rounded-circle" type="button" data-bs-toggle="dropdown"><img src="{% if request.user.photo %}{{ request.user.photo.url }}{% else%}{% static 'assets/images/user.png' %}{% endif %}" alt="image" class="w-40-px h-40-px object-fit-cover rounded-circle" /></button>
                   <div class="dropdown-menu to-top dropdown-menu-sm">
                     <div class="py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
                       <div>

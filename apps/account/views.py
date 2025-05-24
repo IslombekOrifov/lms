@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 
+from .models import CustomUser
 from .forms import CustomLoginForm
 
 
@@ -10,3 +11,40 @@ class CustomLoginView(LoginView):
     
     def get_success_url(self):
         return self.request.GET.get('next', '/main/')
+
+
+def users_list(request):
+    users = CustomUser.objects.all()
+    context = {
+        'users': users,
+    }
+    return render(request, 'account/users-list.html', context)
+
+def users_add(request):
+    users = CustomUser.objects.all()
+    context = {
+        'users': users,
+    }
+    return render(request, 'account/add-user.html', context)
+
+
+def user_detail(request, id):
+    user = CustomUser.objects.get(pk=id)
+    context = {
+        'user': user,
+    }
+    return render(request, 'account/view-profile.html', context)
+
+def user_update(request, id):
+    user = CustomUser.objects.get(pk=id)
+    context = {
+        'user': user,
+    }
+    return render(request, 'account/view-profile.html', context)
+
+def user_delete(request, id):
+    user = CustomUser.objects.get(pk=id)
+    context = {
+        'user': user,
+    }
+    return render(request, 'account/add-user.html', context)

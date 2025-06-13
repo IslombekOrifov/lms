@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'assets/css/user-grid.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/upload-image.css' %}">
+{% endblock %}
+
+{% block content%}
+    <div class="dashboard-main-body">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+        <h6 class="fw-semibold mb-0">View Science</h6>
+        <ul class="d-flex align-items-center gap-2">
+          <li class="fw-medium">
+            <a href="index.html" class="d-flex align-items-center gap-1 hover-text-primary">
+              <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+              Dashboard
+            </a>
+          </li>
+          <li>-</li>
+          <li class="fw-medium">Science</li>
+        </ul>
+      </div>
+
+      <div class="row gy-4">
+        <div class="col-lg-12">
+          <div class="card h-100">
+            <div class="card-body p-24">
+              <ul class="nav border-gradient-tab nav-pills mb-20 d-inline-flex" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link d-flex align-items-center px-24 active" id="pills-edit-profile-tab"
+                    data-bs-toggle="pill" data-bs-target="#pills-edit-profile" type="button" role="tab"
+                    aria-controls="pills-edit-profile" aria-selected="true">
+                    Edit Science
+                  </button>
+                </li>
+              </ul>
+
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-edit-profile" role="tabpanel"
+                  aria-labelledby="pills-edit-profile-tab" tabindex="0">
+                  <h6 class="text-md text-primary-light mb-16">Science</h6>
+                  <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="mb-20">
+                          <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">Name
+                            <span class="text-danger-600">*</span></label>
+                          {% render_field form.name type="text" class="form-control radius-8" placeholder="Name" %}
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="mb-20">
+                          <label for="email" class="form-label fw-semibold text-primary-light text-sm mb-8">Code <span
+                              class="text-danger-600">*</span></label>
+                          {% render_field form.code type="text" class="form-control radius-8" placeholder="Season" %}
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="mb-20">
+                          <label for="number"
+                            class="form-label fw-semibold text-primary-light text-sm mb-8">Parent</label>
+                          {% render_field form.parent class="form-control radius-8" %}
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="mb-20">
+                          <label for="depart" class="form-label fw-semibold text-primary-light text-sm mb-8">Academic Year
+                            <span class="text-danger-600">*</span> </label>
+                          {% render_field form.academic_year type="date" class="form-control radius-8"%}
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="mb-20">
+                          <label for="desig" class="form-label fw-semibold text-primary-light text-sm mb-8">Semester
+                            <span class="text-danger-600">*</span> </label>
+                          {% render_field form.which_semester class="form-control radius-8" %}
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="mb-20">
+                          <label for="desig" class="form-label fw-semibold text-primary-light text-sm mb-8">Kafedra
+                            <span class="text-danger-600">*</span> </label>
+                          {% render_field form.kafedra class="form-control radius-8" %}
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="mb-20">
+                          <label for="desig" class="form-label fw-semibold text-primary-light text-sm mb-8">Active
+                            <span class="text-danger-600">*</span> </label>
+                          {% render_field form.is_active class="form-control radius-8" %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center gap-3">
+                      <a href="{% url 'structure:science_list' %}"
+                        class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8">
+                        Cancel
+                      </a>
+                      <button type="submit"
+                        class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8">
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block my_scripts %}
+  <script>
+    // ======================== Upload Image Start =====================
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+          $('#imagePreview').hide();
+          $('#imagePreview').fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $("#imageUpload").change(function () {
+      readURL(this);
+    });
+    // ======================== Upload Image End =====================
+
+    // ================== Password Show Hide Js Start ==========
+    function initializePasswordToggle(toggleSelector) {
+      $(toggleSelector).on('click', function () {
+        $(this).toggleClass("ri-eye-off-line");
+        var input = $($(this).attr("data-toggle"));
+        if (input.attr("type") === "password") {
+          input.attr("type", "text");
+        } else {
+          input.attr("type", "password");
+        }
+      });
+    }
+    // Call the function
+    initializePasswordToggle('.toggle-password');
+    // ========================= Password Show Hide Js End ===========================
+  </script>
+{% endblock %}

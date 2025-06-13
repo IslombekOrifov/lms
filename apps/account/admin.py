@@ -11,7 +11,8 @@ admin.site.register(Role)
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    list_display = ['username', 'email', 'photo_preview', 'first_name', 'last_name', 'phone', 'is_staff', 'is_active', 'is_verified']
+    list_display = ['username', 'email', 'photo_preview', 'first_name', 
+                    'last_name', 'phone', 'is_staff', 'is_active', 'is_verified']
     list_filter = ['is_staff', 'is_superuser', 'is_active',  'is_deleted']
     search_fields = ['username', 'email', 'first_name', 'last_name', 'phone']
     ordering = ['-date_joined']
@@ -51,6 +52,8 @@ class CustomUserAdmin(UserAdmin):
             "fields": (
                 "is_verified",
                 "is_deleted",
+                "role",
+                "school"
             )
         }),
         (_("Important dates"), {

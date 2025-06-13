@@ -37,7 +37,6 @@ class AcademicYear(MPTTModel, models.Model):
         return f"{self.name}"
 
     
-    
 class Kafedra(models.Model):
     name = models.CharField(max_length=255)
     code = models.CharField(max_length=255, null=True, blank=True)
@@ -55,6 +54,7 @@ class LessonTime(models.Model):
     start_time = models.TimeField(null=True, blank=True)
     end_time = models.TimeField(null=True, blank=True)
     is_active = models.BooleanField(null=True, blank=True)
+    school = models.ForeignKey('main.School', on_delete=models.CASCADE, related_name='lesson_times')
 
     def __str__(self):
         return f"{self.name}"
@@ -65,8 +65,8 @@ class Science(MPTTModel, models.Model):
     code = models.CharField(max_length=255, null=True, blank=True)
     academic_year = models.ForeignKey('structure.AcademicYear', on_delete=models.SET_NULL, null=True, blank=True)
     is_active = models.BooleanField(null=True, blank=True)
-    science = models.ForeignKey('structure.Kafedra', on_delete=models.SET_NULL, null=True, blank=True,
-                                limit_choices_to={'level': 2}, related_name='direction_science')
+    kafedra = models.ForeignKey('structure.Kafedra', on_delete=models.SET_NULL, null=True, blank=True,
+                                related_name='direction_science')
     which_semester = models.IntegerField(null=True, blank=True)
 
     parent = TreeForeignKey(
@@ -76,6 +76,8 @@ class Science(MPTTModel, models.Model):
         blank=True,
         related_name='childs'
     )
+    school = models.ForeignKey('main.School', on_delete=models.CASCADE, related_name='sciences')
+
 
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -92,8 +94,8 @@ class StudentGroup(models.Model):
     tyutor = models.ForeignKey('account.CustomUser', on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name="groupmodel_to_tyutor")
     students = models.ManyToManyField(CustomUser)
-    semester = models.ForeignKey('structure.AcademicYear', on_delete=models.SET_NULL, null=True, blank=True,
-                                 related_name="groupmodel_to_semester")
+    academic_year = models.ForeignKey('structure.AcademicYear', on_delete=models.SET_NULL, null=True, blank=True,
+                                 related_name="groupmodel_to_academic_year")
 
     def __str__(self):
         return self.name
@@ -106,6 +108,8 @@ class ScienceGroup(models.Model):
                                 related_name='science_to_group')
     group = models.ForeignKey(StudentGroup, on_delete=models.SET_NULL, null=True, blank=True,
                               related_name='groupmodel_to_science')
+    teacher = models.ForeignKey('account.CustomUser', on_delete=models.SET_NULL, null=True,
+                                related_name='scheduletable_to_teacher')
     
     def __str__(self):
         return f"{self.name}"

@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import Http404
 from django.contrib.auth.views import LoginView
 
 from .models import CustomUser
@@ -44,7 +45,7 @@ def user_update(request, id):
 
 def user_delete(request, id):
     user = CustomUser.objects.get(pk=id)
-    context = {
-        'user': user,
-    }
-    return render(request, 'account/add-user.html', context)
+    if request.method == 'POST':
+        user.delete()
+        return redirect('account:users_list')   
+    raise Http404("User not found")

@@ -27,9 +27,16 @@ class AcademicYearAdmin(DraggableMPTTAdmin):
     search_fields = ('name',)
 
 
+@admin.register(LessonTime)
+class LessonTimeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'start_time', 'end_time', 'is_active', 'school')
+    list_filter = (ActiveFilter,)
+    search_fields = ('name',)
+
+
 @admin.register(Science)
 class ScienceAdmin(DraggableMPTTAdmin):
-    list_display = ('tree_actions', 'indented_title', 'name', 'code', 'academic_year')
+    list_display = ('tree_actions', 'indented_title', 'name', 'code', 'school', 'academic_year')
     list_filter = (ActiveFilter, 'academic_year')
     search_fields = ('name', 'code')
 
@@ -54,3 +61,11 @@ class StudentGroupAdmin(admin.ModelAdmin):
 class ScheduleTableAdmin(admin.ModelAdmin):
     list_display = ('week_day', 'lesson_time', 'teacher', 'group')
     raw_id_fields = ('teacher', 'group', 'lesson_time')
+
+
+@admin.register(ScienceGroup)
+class ScienceGroupAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code', 'science', 'group', 'teacher')
+    list_filter = (ActiveFilter, 'science')
+    search_fields = ('name', 'code')
+    

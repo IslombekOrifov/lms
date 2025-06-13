@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'assets/css/user-grid.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/upload-image.css' %}">
+{% endblock %}
+
+{% block content%}
+    <div class="dashboard-main-body">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+        <h6 class="fw-semibold mb-0">View Lesson Time</h6>
+        <ul class="d-flex align-items-center gap-2">
+          <li class="fw-medium">
+            <a href="index.html" class="d-flex align-items-center gap-1 hover-text-primary">
+              <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+              Dashboard
+            </a>
+          </li>
+          <li>-</li>
+          <li class="fw-medium">View Lesson Time</li>
+        </ul>
+      </div>
+
+      <div class="row gy-4">
+        <div class="col-lg-8">
+          <div class="user-grid-card position-relative border radius-16 overflow-hidden bg-base h-100">
+            <div class="pb-24 ms-16 mb-24 me-16  mt--100">
+              <div class="text-center border border-top-0 border-start-0 border-end-0">
+               <h6 class="mb-0 mt-16">Lesson Time</h6>
+                <span class="text-secondary-light mb-16">Lesson Time</span>
+              </div>
+              <div class="mt-24">
+                <h6 class="text-xl mb-16">Lesson Time Info</h6>
+                <ul>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light">Name</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ lesson_time.name }}</span>
+                  </li>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light"> Start Time</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ lesson_time.start_time }}</span>
+                  </li>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light"> End Time</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ lesson_time.end_time }}</span>
+                  </li>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light"> Active</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ lesson_time.is_active }}</span>
+                  </li>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light"> School</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ lesson_time.school }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block my_scripts %}
+  <script>
+    // ======================== Upload Image Start =====================
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+          $('#imagePreview').hide();
+          $('#imagePreview').fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $("#imageUpload").change(function () {
+      readURL(this);
+    });
+    // ======================== Upload Image End =====================
+
+    // ================== Password Show Hide Js Start ==========
+    function initializePasswordToggle(toggleSelector) {
+      $(toggleSelector).on('click', function () {
+        $(this).toggleClass("ri-eye-off-line");
+        var input = $($(this).attr("data-toggle"));
+        if (input.attr("type") === "password") {
+          input.attr("type", "text");
+        } else {
+          input.attr("type", "password");
+        }
+      });
+    }
+    // Call the function
+    initializePasswordToggle('.toggle-password');
+    // ========================= Password Show Hide Js End ===========================
+  </script>
+{% endblock %}

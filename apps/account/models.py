@@ -1,16 +1,12 @@
 from django.db import models
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.core.mail import send_mail
-from django.contrib.auth.models import UserManager
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.validators import UnicodeUsernameValidator
 
 
 class RoleName(models.TextChoices):
     ADMIN = 'admin', _('Administrator')
-    DEKAN = 'dekan', _('Dean')
-    RECTOR = 'rector', _('Rector')
+    DEKAN = 'dekan', _('Dekan')
+    DIRECTOR = 'director', _('Director')
     DEPARTMENT_USER = 'department_user', _('Department User')
     TUTOR = 'tutor', _('Tutor')
     STYLIST = 'stylist', _('Stylist')
@@ -76,7 +72,13 @@ class CustomUser(AbstractUser):
     mother_telegram_id = models.CharField(max_length=100, blank=True, null=True)
     
     start_work = models.DateField(blank=True, null=True)    
-    
+    school = models.ForeignKey(
+        'main.School',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='users'
+    )
     is_worker = models.BooleanField(default=False)
     is_archived = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
@@ -87,3 +89,10 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} {self.phone}"
+    
+    def get_full_name(self):
+        """
+        Return the first_name plus the last_name, with a space in between.
+        """
+        full_name = "%s %s %s" % (self.first_name, self.last_name, self.middle_name)
+        return full_name.strip()

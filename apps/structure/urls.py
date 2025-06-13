@@ -1,18 +1,6 @@
 from django.urls import path
 
-from .views import(
-    academic_year_list, academic_year_delete, academic_year_detail,
-    academic_year_update, academic_year_create,
-    
-    kafedra_list, kafedra_delete, kafedra_detail,
-    kafedra_update, kafedra_create,
-    
-    lesson_time_list, lesson_time_delete, lesson_time_detail,
-    lesson_time_update, lesson_time_create,
-    
-    science_list, science_delete, science_detail,
-    science_update, science_create
-)
+from .views import *
 
 app_name = 'structure'
 
@@ -40,4 +28,17 @@ urlpatterns = [
     path('science/<int:pk>/delete/', science_delete, name='science_delete'),
     path('science/<int:id>/detail/', science_detail, name='science_detail'),
     path('science/<int:id>/update/', science_update, name='science_update'),
+    
+    path('student-group/', student_group_list, name='student_group_list'),
+    path('student-group/create/', student_group_create, name='student_group_create'),
+    path('student-group/<int:pk>/delete/', student_group_delete, name='student_group_delete'),
+    path('student-group/<int:id>/detail/', student_group_detail, name='student_group_detail'),
+    path('student-group/<int:id>/update/', student_group_update, name='student_group_update'),
+    path('student-group/<int:pk>/reject/user/<int:user_id>/', student_group_reject_student, name='student_group_reject_student'),
+    
+    path('science-group/', science_group_list, name='science_group_list'),
+    path('science-group/create/', science_group_create, name='science_group_create'),
+    path('science-group/<int:pk>/delete/', science_group_delete, name='science_group_delete'),
+    path('science-group/<int:id>/detail/', science_group_detail, name='science_group_detail'),
+    path('science-group/<int:id>/update/', science_group_update, name='science_group_update'),
 ]

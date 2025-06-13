@@ -96,6 +96,7 @@ class StudentGroup(models.Model):
     students = models.ManyToManyField(CustomUser)
     academic_year = models.ForeignKey('structure.AcademicYear', on_delete=models.SET_NULL, null=True, blank=True,
                                  related_name="groupmodel_to_academic_year")
+    is_active = models.BooleanField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -110,7 +111,7 @@ class ScienceGroup(models.Model):
                               related_name='groupmodel_to_science')
     teacher = models.ForeignKey('account.CustomUser', on_delete=models.SET_NULL, null=True,
                                 related_name='scheduletable_to_teacher')
-    
+    is_active = models.BooleanField(null=True, blank=True)
     def __str__(self):
         return f"{self.name}"
 

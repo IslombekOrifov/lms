@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import Http404
 
-from .models import AcademicYear, Kafedra, LessonTime, Science
-from .forms import AcademicYearForm, KafedraForm, LessonTimeForm, ScienceForm
+from .models import *
+from .forms import *
 
 
 def academic_year_list(request):
@@ -189,3 +190,108 @@ def science_create(request):
     else:
         form = ScienceForm()
     return render(request, 'structure/science-update.html', {'form': form})
+
+
+
+
+def student_group_list(request):
+    student_groups = StudentGroup.objects.all()
+    context = {
+        'student_groups': student_groups
+    }
+    return render(request, 'structure/student-group.html', context)
+
+def student_group_delete(request, pk):
+    if request.method == 'POST':
+        student_group = StudentGroup.objects.get(id=pk)
+        student_group.delete()
+        return redirect('structure:student_group_list')
+    else:
+        return Http404()
+
+def student_group_detail(request, id):
+    student_group = StudentGroup.objects.get(pk=id)
+    context = {
+        'student_group': student_group
+    }
+    return render(request, 'structure/student-group-detail.html', context)
+
+def student_group_update(request, id):
+    student_group = StudentGroup.objects.get(pk=id)
+    if request.method == 'POST':
+        form = StudentGroupForm(request.POST, instance=student_group, request=request)
+        if form.is_valid():
+            form.save()
+            return redirect('structure:student_group_list')
+    else:
+        form = StudentGroupForm(instance=student_group, request=request)
+    return render(request, 'structure/student-group-update.html', {'form': form})
+
+def student_group_create(request):
+    if request.method == 'POST':
+        form = StudentGroupForm(request.POST, request=request)
+        if form.is_valid():
+            student_group = form.save(commit=False)
+            student_group.school = request.user.school
+            student_group.save()
+            return redirect('structure:student-group_list')
+    else:
+        form = StudentGroupForm(request=request)
+    return render(request, 'structure/student-group-update.html', {'form': form})
+
+
+def student_group_reject_student(request, pk, user_id):
+    if request.method == 'POST':
+        student_group = StudentGroup.objects.get(id=pk)
+        student = CustomUser.objects.get(id=user_id)
+        student_group.students.remove(student)
+        return redirect(reverse('structure:student_group_detail', args=[pk]))
+    else:
+        return Http404()
+    
+    
+    
+def science_group_list(request):
+    science_groups = ScienceGroup.objects.all()
+    context = {
+        'science_groups': science_groups
+    }
+    return render(request, 'structure/science-group.html', context)
+
+def science_group_delete(request, pk):
+    if request.method == 'POST':
+        science_group = ScienceGroup.objects.get(id=pk)
+        science_group.delete()
+        return redirect('structure:science_group_list')
+    else:
+        return Http404()
+
+def science_group_detail(request, id):
+    science_group = ScienceGroup.objects.get(pk=id)
+    context = {
+        'science_group': science_group
+    }
+    return render(request, 'structure/science-group-detail.html', context)
+
+def science_group_update(request, id):
+    science_group = ScienceGroup.objects.get(pk=id)
+    if request.method == 'POST':
+        form = ScienceGroupForm(request.POST, instance=science_group, request=request)
+        if form.is_valid():
+            form.save()
+            return redirect('structure:science_group_list')
+    else:
+        form = ScienceGroupForm(instance=science_group, request=request)
+    return render(request, 'structure/science-group-update.html', {'form': form})
+
+def science_group_create(request):
+    if request.method == 'POST':
+        form = ScienceGroupForm(request.POST, request=request)
+        if form.is_valid():
+            science_group = form.save(commit=False)
+            science_group.school = request.user.school
+            science_group.save()
+            return redirect('structure:science-group_list')
+    else:
+        form = ScienceGroupForm(request=request)
+    return render(request, 'structure/science-group-update.html', {'form': form})

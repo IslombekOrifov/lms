@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'assets/css/user-grid.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/upload-image.css' %}">
+{% endblock %}
+
+{% block content%}
+    <div class="dashboard-main-body">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+        <h6 class="fw-semibold mb-0">View Student Group</h6>
+        <ul class="d-flex align-items-center gap-2">
+          <li class="fw-medium">
+            <a href="index.html" class="d-flex align-items-center gap-1 hover-text-primary">
+              <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+              Dashboard
+            </a>
+          </li>
+          <li>-</li>
+          <li class="fw-medium">View Student Group</li>
+        </ul>
+      </div>
+
+      <div class="row gy-4">
+        <div class="col-lg-12">
+          <div class="user-grid-card position-relative border radius-16 overflow-hidden bg-base h-100">
+            <div class="pb-24 ms-16 mb-24 me-16  mt--100">
+              <div class="text-center border border-top-0 border-start-0 border-end-0">
+               <h6 class="mb-0 mt-16">Student Group</h6>
+                <span class="text-secondary-light mb-16">Student Group</span>
+              </div>
+              <div class="mt-24">
+                <h6 class="text-xl mb-16">Student Group Info</h6>
+                <ul>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light">Name</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ student_group.name }}</span>
+                  </li>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light"> Language</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ student_group.lang }}</span>
+                  </li>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light"> Group Type</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ student_group.science_type }}</span>
+                  </li>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light"> Academic Year</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ student_group.academic_year }}</span>
+                  </li>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light"> Tyutor</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ student_group.tyutor }}</span>
+                  </li>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light"> School</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ student_group.school }}</span>
+                  </li>
+                  <li class="d-flex align-items-center gap-1 mb-12">
+                    <span class="w-30 text-md fw-semibold text-primary-light"> Ative</span>
+                    <span class="w-70 text-secondary-light fw-medium">: {{ student_group.is_active }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body p-24">
+          <div class="table-responsive scroll-sm">
+            <table class="table bordered-table sm-table mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">
+                    <div class="d-flex align-items-center gap-10">
+                      <div class="form-check style-check d-flex align-items-center">
+                        <input class="form-check-input radius-4 border input-form-dark" type="checkbox" name="checkbox" id="selectAll" />
+                      </div>S.L
+                    </div>
+                  </th>
+                  <th scope="col">Join Date</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col" class="text-center">Status</th>
+                  <th scope="col" class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in student_group.students.all %}
+                  <tr>
+                    <td>
+                      <div class="d-flex align-items-center gap-10">
+                        <div class="form-check style-check d-flex align-items-center">
+                          <input class="form-check-input radius-4 border border-neutral-400" type="checkbox" name="checkbox" id="SL" />
+                        </div>{{ forloop.counter }}
+                      </div>
+                    </td>
+                    <td>{{ user.date_joined}}</td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img src="{% if user.photo %}{{ user.photo.url }}{% endif %}" alt="avatar" class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden" />
+                        <div class="flex-grow-1">
+                          <span class="text-md mb-0 fw-normal text-secondary-light">{{ user.get_full_name }}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="text-md mb-0 fw-normal text-secondary-light">{{ user.email }}</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="bg-success-focus text-success-600 border border-success-main px-24 py-4 radius-4 fw-medium text-sm">Active</span>
+                    </td>
+                    <td class="text-center">
+                      <div class="d-flex align-items-center gap-10 justify-content-center">
+                        <a href="{% url 'account:user_detail' user.id %}" class="bg-info-focus bg-hover-info-200 text-info-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle"><iconify-icon icon="majesticons:eye-line" class="icon text-xl"></iconify-icon></a>
+                        <a href="{% url 'account:user_update' user.id %}" class="bg-success-focus text-success-600 bg-hover-success-200 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle"><iconify-icon icon="lucide:edit" class="menu-icon"></iconify-icon></a>
+                        <form action="{% url 'structure:student_group_reject_student' student_group.id user.id %}" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="bg-danger-focus bg-hover-danger-200 text-danger-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle"><iconify-icon icon="fluent:delete-24-regular" class="menu-icon"></iconify-icon></button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block my_scripts %}
+  <script>
+    // ======================== Upload Image Start =====================
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+          $('#imagePreview').hide();
+          $('#imagePreview').fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $("#imageUpload").change(function () {
+      readURL(this);
+    });
+    // ======================== Upload Image End =====================
+
+    // ================== Password Show Hide Js Start ==========
+    function initializePasswordToggle(toggleSelector) {
+      $(toggleSelector).on('click', function () {
+        $(this).toggleClass("ri-eye-off-line");
+        var input = $($(this).attr("data-toggle"));
+        if (input.attr("type") === "password") {
+          input.attr("type", "text");
+        } else {
+          input.attr("type", "password");
+        }
+      });
+    }
+    // Call the function
+    initializePasswordToggle('.toggle-password');
+    // ========================= Password Show Hide Js End ===========================
+  </script>
+{% endblock %}

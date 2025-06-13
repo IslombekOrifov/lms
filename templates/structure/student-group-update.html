@@ -12,7 +12,7 @@
 {% block content%}
     <div class="dashboard-main-body">
       <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
-        <h6 class="fw-semibold mb-0">View Science</h6>
+        <h6 class="fw-semibold mb-0">View Student Group</h6>
         <ul class="d-flex align-items-center gap-2">
           <li class="fw-medium">
             <a href="index.html" class="d-flex align-items-center gap-1 hover-text-primary">
@@ -21,7 +21,7 @@
             </a>
           </li>
           <li>-</li>
-          <li class="fw-medium">Science</li>
+          <li class="fw-medium">Student Group</li>
         </ul>
       </div>
 
@@ -34,7 +34,7 @@
                   <button class="nav-link d-flex align-items-center px-24 active" id="pills-edit-profile-tab"
                     data-bs-toggle="pill" data-bs-target="#pills-edit-profile" type="button" role="tab"
                     aria-controls="pills-edit-profile" aria-selected="true">
-                    Edit Science
+                    Edit Student Group
                   </button>
                 </li>
               </ul>
@@ -42,50 +42,51 @@
               <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-edit-profile" role="tabpanel"
                   aria-labelledby="pills-edit-profile-tab" tabindex="0">
-                  <h6 class="text-md text-primary-light mb-16">Science</h6>
+                  <h6 class="text-md text-primary-light mb-16">Student Group</h6>
                   <form method="post">
                     {% csrf_token %}
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="mb-20">
-                          <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">Name {{ form.name.placeholder }}
+                          <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">Name
                             <span class="text-danger-600">*</span></label>
+                            {{ form.name.instance }}
                           {% render_field form.name type="text" class="form-control radius-8" placeholder="Name" %}
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="mb-20">
-                          <label for="email" class="form-label fw-semibold text-primary-light text-sm mb-8">Code <span
+                          <label for="email" class="form-label fw-semibold text-primary-light text-sm mb-8">Language <span
                               class="text-danger-600">*</span></label>
-                          {% render_field form.code type="text" class="form-control radius-8" placeholder="Season" %}
+                          {% render_field form.lang class="form-control radius-8" %}
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="mb-20">
                           <label for="number"
-                            class="form-label fw-semibold text-primary-light text-sm mb-8">Parent</label>
-                          {% render_field form.parent class="form-control radius-8" %}
+                            class="form-label fw-semibold text-primary-light text-sm mb-8">Academic Year </label>
+                          {% render_field form.academic_year class="form-control radius-8" %}
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="mb-20">
-                          <label for="depart" class="form-label fw-semibold text-primary-light text-sm mb-8">Academic Year
-                            <span class="text-danger-600">*</span> </label>
-                          {% render_field form.academic_year type="date" class="form-control radius-8"%}
+                          <label for="number"
+                            class="form-label fw-semibold text-primary-light text-sm mb-8">Group Type </label>
+                          {% render_field form.science_type class="form-control radius-8" %}
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="mb-20">
-                          <label for="desig" class="form-label fw-semibold text-primary-light text-sm mb-8">Semester
+                          <label for="depart" class="form-label fw-semibold text-primary-light text-sm mb-8">Tyutor
                             <span class="text-danger-600">*</span> </label>
-                          {% render_field form.which_semester class="form-control radius-8" %}
+                          {% render_field form.tyutor class="form-control radius-8"%}
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="mb-20">
-                          <label for="desig" class="form-label fw-semibold text-primary-light text-sm mb-8">Kafedra
+                          <label for="desig" class="form-label fw-semibold text-primary-light text-sm mb-8">Students
                             <span class="text-danger-600">*</span> </label>
-                          {% render_field form.kafedra class="form-control radius-8" %}
+                          {% render_field form.students class="form-control radius-8"%}
                         </div>
                       </div>
                       <div class="col-sm-6">
@@ -97,7 +98,7 @@
                       </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-3">
-                      <a href="{% url 'structure:science_list' %}"
+                      <a href="{% url 'structure:student_group_list' %}"
                         class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8">
                         Cancel
                       </a>

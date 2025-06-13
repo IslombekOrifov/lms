@@ -7,6 +7,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 class School(models.Model):
     name = models.CharField(max_length=255)
     code = models.CharField(max_length=255, null=True, blank=True)
+    logo = models.ImageField(upload_to='school/logo/', blank=True, null=True)
     about = models.TextField(null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)

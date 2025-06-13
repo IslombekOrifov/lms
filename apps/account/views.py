@@ -15,11 +15,11 @@ class CustomLoginView(LoginView):
 
 
 def users_list(request):
-    users = CustomUser.objects.all()
+    users = CustomUser.objects.filter(role__name='student')
     context = {
         'users': users,
     }
-    return render(request, 'account/users-list.html', context)
+    return render(request, 'account/students-list.html', context)
 
 def users_add(request):
     users = CustomUser.objects.all()

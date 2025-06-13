@@ -1,0 +1,66 @@
+{% extends 'base_teacher.html' %}
+
+{% block content %}
+  <div class="dashboard-main-body">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+      <h6 class="fw-semibold mb-0">Teaching groups</h6>
+      <ul class="d-flex align-items-center gap-2">
+        <li class="fw-medium">
+          <a href="index.html" class="d-flex align-items-center gap-1 hover-text-primary"><iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>Dashboard</a>
+        </li>
+        <li>-</li>
+        <li class="fw-medium">Teaching groups</li>
+      </ul>
+    </div>
+
+    <div class="row gy-4">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Group info</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table striped-table mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Science</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Students Count</th>
+                    <th scope="col" class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for group in groups %}
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="assets/images/product/product-img1.png" alt="" class="flex-shrink-0 me-12 radius-8 me-12" />
+                          <div class="flex-grow-1">
+                            <h6 class="text-md mb-0 fw-normal">{{ group.name }}</h6>
+                            <span class="text-sm text-secondary-light fw-normal">{{ group.group.name }}</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>{{ group.science.name }}</td>
+                      <td>{{ group.code}}</td>
+                      <td>{{ group.group.students.count }}</td>
+                      <td class="text-center">
+                        <a href="{% url 'main:teacher_group_detail' group.id %}"
+                          class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
+                          <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
+                        </a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- card end -->
+      </div>
+    </div>
+  </div>
+{% endblock %}

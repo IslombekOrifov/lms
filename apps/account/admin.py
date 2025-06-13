@@ -52,6 +52,7 @@ class CustomUserAdmin(UserAdmin):
             "fields": (
                 "is_verified",
                 "is_deleted",
+                "is_worker",
                 "role",
                 "school"
             )

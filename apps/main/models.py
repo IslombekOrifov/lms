@@ -65,11 +65,26 @@ class Submission(models.Model):
         return f"Submission #{self.id}"
 
 
+class Module(models.Model):
+    group = models.ForeignKey(ScienceGroup,
+                               related_name='modules',
+                               on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f'{self.order}. {self.title}'
+
+
 class Lesson(models.Model):
     name = models.CharField(max_length=255)
     lesson_date = models.DateField(null=True, blank=True)
     status = models.CharField(choices=LESSON_STATUS_CHOICES, null=True, blank=True, max_length=223)
-    groups = models.ForeignKey(ScienceGroup, on_delete=models.SET_NULL, null=True,related_name='lesson_to_group_model')
+    module = models.ForeignKey(Module, on_delete=models.SET_NULL, null=True,related_name='lesson_to_group_model')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -85,7 +100,6 @@ class LessonSource(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True,
                                related_name='lessonsource_to_lesson')
     file = models.FileField(upload_to='lesson_sources/')
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)

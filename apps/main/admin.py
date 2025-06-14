@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import School, Task, Submission, Lesson, LessonSource, NB, RatingNotebook
+from .models import School, Task, Submission, Lesson, LessonSource, NB, RatingNotebook, Module
 
 
 admin.site.site_header = "LMS Administration"
@@ -35,7 +35,7 @@ class LessonSourceInline(admin.TabularInline):
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
     list_display = ('name', 'lesson_date', 'status')
-    list_filter = ('status', 'groups')
+    list_filter = ('status', 'module')
     inlines = [LessonSourceInline]
     date_hierarchy = 'lesson_date'
 
@@ -45,3 +45,10 @@ class RatingNotebookAdmin(admin.ModelAdmin):
     list_display = ('student', 'science_name', 'grade')
     raw_id_fields = ('student', 'science_name')
     search_fields = ('student__username',)
+    
+    
+@admin.register(Module)
+class ModuleAdmin(admin.ModelAdmin):
+    list_display = ('group', 'title', 'order')
+    raw_id_fields = ('group',)
+    search_fields = ('title', 'group')

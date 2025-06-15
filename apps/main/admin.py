@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import School, Task, Submission, Lesson, LessonSource, NB, RatingNotebook, Module
+from django import forms
+
+from ckeditor.widgets import CKEditorWidget
+
+from .models import (
+    School, Task, Submission, Lesson, LessonSource, 
+    NB, RatingNotebook, Module
+)
 
 
 admin.site.site_header = "LMS Administration"
@@ -32,12 +39,20 @@ class LessonSourceInline(admin.TabularInline):
     extra = 1
 
 
+class LessonAdminForm(forms.ModelForm):
+    text = forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = Lesson
+        fields = '__all__'
+
+
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
-    list_display = ('name', 'lesson_date', 'status')
+    list_display = ('name', 'module', 'lesson_date', 'status')
     list_filter = ('status', 'module')
     inlines = [LessonSourceInline]
     date_hierarchy = 'lesson_date'
+    form = LessonAdminForm
 
 
 @admin.register(RatingNotebook)

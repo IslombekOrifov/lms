@@ -2,6 +2,7 @@ from django.db import models
 from account.models import CustomUser
 from structure.models import ROOM_GROUP_TYPE, LANGUAGES, StudentGroup, ScienceGroup
 from mptt.models import MPTTModel, TreeForeignKey
+from ckeditor.fields import RichTextField
 
 
 class School(models.Model):
@@ -85,7 +86,7 @@ class Lesson(models.Model):
     lesson_date = models.DateField(null=True, blank=True)
     status = models.CharField(choices=LESSON_STATUS_CHOICES, null=True, blank=True, max_length=223)
     module = models.ForeignKey(Module, on_delete=models.SET_NULL, null=True,related_name='lesson_to_group_model')
-
+    text = RichTextField(config_name='default')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)

@@ -51,9 +51,9 @@ def teacher_group(request):
 @login_required
 @teacher_required
 def teacher_group_detail(request, id):
-    group = ScienceGroup.objects.get(pk=id, teacher=request.user, is_active=True)
+    group = ScienceGroup.objects.filter(pk=id, teacher=request.user, is_active=True).prefetch_related('modules', 'modules__lesson_to_group_model').first()
     context = {'group': group}
-    return render(request, 'main/teacher-group.html', context)
+    return render(request, 'main/module.html', context)
 
 
 

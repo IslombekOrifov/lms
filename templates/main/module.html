@@ -1,0 +1,67 @@
+{% extends 'base_teacher.html' %}
+
+{% block content %}
+  <div class="dashboard-main-body">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+      <h6 class="fw-semibold mb-0">Faq</h6>
+      <ul class="d-flex align-items-center gap-2">
+        <li class="fw-medium">
+          <a href="index.html" class="d-flex align-items-center gap-1 hover-text-primary"><iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>Dashboard</a>
+        </li>
+        <li>-</li>
+        <li class="fw-medium">Faq</li>
+      </ul>
+    </div>
+
+    <div class="card basic-data-table">
+      <div class="card-header p-0 border-0">
+        <div class="responsive-padding-40-150 bg-light-pink">
+          <div class="row gy-4 align-items-center">
+            <div class="col-xl-7">
+              <h4 class="mb-20">Frequently asked questions.</h4>
+              <p class="mb-0 text-secondary-light max-w-634-px text-xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard du text ever since the 1500s, when an unkn</p>
+            </div>
+            <div class="col-xl-5 d-xl-block d-none">
+              <img src="assets/images/faq-img.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body bg-base responsive-padding-40-150">
+        <div class="row gy-4">
+          <div class="col-lg-4">
+            <div class="active-text-tab nav flex-column nav-pills bg-base shadow py-0 px-24 radius-12 border" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              {% for module in group.modules.all %}
+                <button class="nav-link text-secondary-light fw-semibold text-xl px-0 py-16 border-bottom" id="v-pills-{{module.id}}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{module.id}}" type="button" role="tab" aria-controls="v-pills-{{module.id}}" aria-selected="false">{{ module.title }}</button>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="tab-content" id="v-pills-tabContent">
+              {% for module in group.modules.all %}
+                <div class="tab-pane fade" id="v-pills-{{module.id}}" role="tabpanel" aria-labelledby="v-pills-{{module.id}}-tab" tabindex="0">
+                  <div class="accordion" id="accordionExampleThree">
+                    {% for lesson in module.lesson_to_group_model.all %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header"><button class="accordion-button text-primary-light text-xl{% if forloop.count == 1 %}{% else %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#c-{{ lesson.id }}" aria-expanded="true" aria-controls="c-{{ lesson.id }}">{{ lesson.name }}</button></h2>
+                      <div id="c-{{ lesson.id }}" class="accordion-collapse collapse {% if forloop.counter == 1 %}show{% endif %}" data-bs-parent="#accordionExampleThree">
+                        <div class="accordion-body">{{ lesson.text|safe }}</div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block my_scripts %}
+  <script>
+    let table = new DataTable('#dataTable')
+  </script>
+{% endblock %}

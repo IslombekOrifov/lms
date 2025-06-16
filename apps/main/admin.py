@@ -67,3 +67,9 @@ class ModuleAdmin(admin.ModelAdmin):
     list_display = ('group', 'title', 'order')
     raw_id_fields = ('group',)
     search_fields = ('title', 'group')
+
+
+@admin.register(NB)
+class NBAdmin(admin.ModelAdmin):
+    list_display = ('student', 'lesson', 'cause_status', 'created_at', 'updated_at')
+    list_filter = ('created_at', 'updated_at', 'is_active')

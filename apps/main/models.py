@@ -86,13 +86,42 @@ class Lesson(models.Model):
     lesson_date = models.DateField(null=True, blank=True)
     status = models.CharField(choices=LESSON_STATUS_CHOICES, null=True, blank=True, max_length=223)
     module = models.ForeignKey(Module, on_delete=models.SET_NULL, null=True,related_name='lesson_to_group_model')
+    about = models.CharField(max_length=255, blank=True, null=True)
     text = RichTextField(config_name='default')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
+    
     def __str__(self):
         return self.name
 
+
+class DailyRatings(models.Model):
+    science_group = models.ForeignKey(ScienceGroup,
+                               related_name='daily_taings',
+                               on_delete=models.CASCADE)
+    student = models.ForeignKey('account.CustomUser', on_delete=models.SET_NULL, null=True,
+                                related_name='dailyrating_to_student')
+    ball = models.DecimalField(max_digits=10,
+                               decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.science_group} > {self.student}'
+
+
+class NBandRating(models.Model):
+    lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True,
+                               related_name='nb_and_rating_to_lesson')
+    is_checked = models.BooleanField(default=False)
+    is_rated = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class LessonSource(models.Model):

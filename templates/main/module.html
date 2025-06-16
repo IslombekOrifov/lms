@@ -31,6 +31,7 @@
         <div class="row gy-4">
           <div class="col-lg-4">
             <div class="active-text-tab nav flex-column nav-pills bg-base shadow py-0 px-24 radius-12 border" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <a href="{% url 'main:teacher_module_create' group.id %}" class="btn rounded-pill btn-success-100 text-success-600 radius-8 text-xl px-20 py-16  border-bottom" >Add new module</a>
               {% for module in group.modules.all %}
                 <button class="nav-link text-secondary-light fw-semibold text-xl px-0 py-16 border-bottom" id="v-pills-{{module.id}}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{module.id}}" type="button" role="tab" aria-controls="v-pills-{{module.id}}" aria-selected="false">{{ module.title }}</button>
               {% endfor %}
@@ -41,11 +42,15 @@
               {% for module in group.modules.all %}
                 <div class="tab-pane fade" id="v-pills-{{module.id}}" role="tabpanel" aria-labelledby="v-pills-{{module.id}}-tab" tabindex="0">
                   <div class="accordion" id="accordionExampleThree">
+                    <div class="accordion-item">
+                      <a href="{% url 'main:teacher_lesson_create' module.id %}" class="accordion-header w-100 btn rounded-pill btn-success-100 text-success-600 radius-8 text-xl px-20 py-16  border-bottom" >Add new lesson</a>
+                    </div>
                     {% for lesson in module.lesson_to_group_model.all %}
                     <div class="accordion-item">
                       <h2 class="accordion-header"><button class="accordion-button text-primary-light text-xl{% if forloop.count == 1 %}{% else %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#c-{{ lesson.id }}" aria-expanded="true" aria-controls="c-{{ lesson.id }}">{{ lesson.name }}</button></h2>
                       <div id="c-{{ lesson.id }}" class="accordion-collapse collapse {% if forloop.counter == 1 %}show{% endif %}" data-bs-parent="#accordionExampleThree">
-                        <div class="accordion-body">{{ lesson.text|safe }}</div>
+                        <div class="accordion-body">{{ lesson.about }}</div>
+                        <a href="{% url 'main:lesson_detail' lesson.id %}" class="accordion-header w-100 btn rounded-pill btn-success-100 text-success-600 radius-8 text-xl px-20 py-16  border-bottom" >Ko'rish</a>
                       </div>
                     </div>
                     {% endfor %}

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
 from mptt.admin import DraggableMPTTAdmin
+
 from .models import (
     AcademicYear, Kafedra, LessonTime, Science, 
     StudentGroup, ScienceGroup, ScheduleTable

@@ -1,6 +1,9 @@
 from django.db import models
-from account.models import CustomUser
+
 from mptt.models import MPTTModel, TreeForeignKey
+
+from lms.apps.account.models import CustomUser
+
 
 LANGUAGES = (
     ('uz', 'Uzbek'),
@@ -114,7 +117,6 @@ class ScienceGroup(models.Model):
     is_active = models.BooleanField(null=True, blank=True)
     def __str__(self):
         return f"{self.name}"
-
 
 
 class ScheduleTable(models.Model):

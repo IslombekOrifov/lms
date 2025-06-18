@@ -1,11 +1,8 @@
-import os
-import sys
 from pathlib import Path
 from environs import Env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.append(os.path.join(BASE_DIR, 'apps'))
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 env = Env()
 env.read_env(path=BASE_DIR / '.env', override=True)
@@ -27,7 +24,7 @@ ALLOWED_HOSTS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'account.apps.AccountConfig',
+    'lms.apps.account.apps.AccountConfig',
     
     "django.contrib.admin",
     "django.contrib.auth",
@@ -41,8 +38,8 @@ INSTALLED_APPS = [
     "ckeditor",
     "ckeditor_uploader",
     
-    "main.apps.MainConfig",
-    "structure.apps.StructureConfig",
+    "lms.apps.main.apps.MainConfig",
+    "lms.apps.structure.apps.StructureConfig",
 ]
 
 MIDDLEWARE = [
@@ -56,7 +53,7 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
-ROOT_URLCONF = "config.urls"
+ROOT_URLCONF = "lms.config.urls"
 
 TEMPLATES = [
     {
@@ -73,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "config.wsgi.application"
+WSGI_APPLICATION = "lms.config.wsgi.application"
 
 
 # Database

@@ -2,7 +2,7 @@ from django import forms
 
 from ckeditor.widgets import CKEditorWidget
 
-from account.models import RoleName
+from lms.apps.account.models import RoleName
 from .models import School, Module, Lesson, NB
 
 

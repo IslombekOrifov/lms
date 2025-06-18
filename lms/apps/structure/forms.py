@@ -1,7 +1,7 @@
 from django import forms
 from django.db.models import Q
 
-from account.models import CustomUser
+from lms.apps.account.models import CustomUser
 from .models import (
     AcademicYear, Kafedra, LessonTime,
     Science, StudentGroup, ScienceGroup

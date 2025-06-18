@@ -5,10 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.utils import timezone
 
+from lms.apps.structure.models import ScienceGroup
 from .models import School, Lesson, Module, NB, NBandRating
 from .forms import SchoolForm, ModuleForm, LessonForm, NBForm
-
-from structure.models import ScienceGroup
 
 
 def teacher_required(view_func):

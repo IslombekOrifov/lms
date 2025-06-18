@@ -1,8 +1,10 @@
 from django.db import models
-from account.models import CustomUser
-from structure.models import ROOM_GROUP_TYPE, LANGUAGES, StudentGroup, ScienceGroup
+
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor.fields import RichTextField
+
+from lms.apps.account.models import CustomUser
+from lms.apps.structure.models import ROOM_GROUP_TYPE, LANGUAGES, StudentGroup, ScienceGroup
 
 
 class School(models.Model):

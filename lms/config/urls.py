@@ -7,9 +7,9 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("account.urls", namespace="account")),
-    path("main/", include("main.urls", namespace="main")),
-    path("structure/", include("structure.urls", namespace="structure")),
+    path("", include("lms.apps.account.urls", namespace="account")),
+    path("main/", include("lms.apps.main.urls", namespace="main")),
+    path("structure/", include("lms.apps.structure.urls", namespace="structure")),
 ]
 
 urlpatterns += [

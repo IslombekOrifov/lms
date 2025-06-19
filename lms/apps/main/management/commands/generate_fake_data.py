@@ -7,9 +7,9 @@ from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand
 from faker import Faker
 
-from account.models import CustomUser, Role
-from main.models import School
-from structure.models import AcademicYear, Kafedra, Science, StudentGroup, ScienceGroup
+from lms.apps.account.models import CustomUser, Role
+from lms.apps.main.models import School
+from lms.apps.structure.models import AcademicYear, Kafedra, Science, StudentGroup, ScienceGroup
 
 
 fake = Faker()

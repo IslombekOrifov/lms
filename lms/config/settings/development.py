@@ -229,30 +229,3 @@ LOGGING = {
         },
     },
 }
-
-# =============================================================================
-# USAGE IN SETTINGS.PY
-# =============================================================================
-
-"""
-
-
-# Production settings.py
-from .logging_config import LOGGING_PRODUCTION
-
-DEBUG = False
-LOGGING = LOGGING_PRODUCTION
-
-
-
-# Email настройки для AdminEmailHandler
-ADMINS = [
-    ('Admin', 'admin@example.com'),
-]
-EMAIL_HOST = 'smtp.example.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@example.com'
-EMAIL_HOST_PASSWORD = 'your-password'
-SERVER_EMAIL = 'server@example.com'
-"""

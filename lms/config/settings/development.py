@@ -7,7 +7,7 @@ SECRET_KEY = env.str("SECRET_KEY", 'django-insecure-test-key')
 
 DEBUG = env.bool("DEBUG", True)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", ['127.0.0.1',])
 
 
 # Database
